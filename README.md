@@ -1,4 +1,4 @@
-# BookIT Client
+# BookIT Client [![Build Status](https://travis-ci.org/cmbrad/studentit-bookit-client.svg?branch=master)](https://travis-ci.org/cmbrad/studentit-bookit-client)
 Python client to interface with the BookIT service.
 
 ## Installation

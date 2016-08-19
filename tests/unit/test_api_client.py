@@ -2,11 +2,15 @@ import os
 import pytest
 import fluentmock
 
+import bookit
 from bookit.api_client import ApiClient
 
 
 @pytest.fixture()
-def client():
+def client(monkeypatch):
+	# Disble login
+	monkeypatch.setattr('bookit.api_adapter.ApiAdapter._do_login', lambda x: None)
+
 	return ApiClient(
 		username=os.environ['BOOKIT_USERNAME'],
 		password=os.environ['BOOKIT_PASSWORD']
