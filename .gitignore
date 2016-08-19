@@ -1,3 +1,6 @@
 env
+target
 *.pyc
 *.swp
+.cache
+__pycache__
