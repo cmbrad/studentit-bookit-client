@@ -18,6 +18,7 @@ class ApiAdapter(object):
 	def _do_login(self):
 		login_string = '<Login><username>{}</username><password>{}</password><rememberMe>false</rememberMe><rememberView>-</rememberView></Login>'.format(self.username, self.password)
 		login_resp = self.post(endpoint='cire/login.aspx', data=login_string)
+		assert login_resp.status_code == 200
 		
 		match = re.search("\'http://bookit.unimelb.edu.au/(.*)\'", login_resp.text)
 		if not match:

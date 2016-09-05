@@ -110,3 +110,16 @@ class ApiClient(object):
 
 		return True
 
+	def server_status(self):
+		resp = self.adapter.get(
+			endpoint='MyPC/Front.aspx?page=getResourceStatesAPI'
+		)
+
+		return resp.status_code != 200 or not self._to_json(resp.text)
+
+	def _to_json(self, text):
+		try:
+			return json.loads(text)
+		except:
+			return None
+

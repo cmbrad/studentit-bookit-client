@@ -12,6 +12,10 @@ def cli(ctx, username, password):
 
 
 @cli.group()
+def server():
+	pass
+
+@cli.group()
 def resource():
 	pass
 
@@ -46,9 +50,18 @@ def list(client):
 	print(client.list_bookings())
 
 
+@server.command()
+@click.pass_obj
+def status(client):
+	if client.server_status():
+		print('BookIT is up and responding to requests')
+	else:
+		print('BookIT is down')
+
+
 if __name__ == '__main__':
 	try:
 		cli(auto_envvar_prefix='BOOKIT')
 	except Exception as e:
-		print(e)
+		print('ERROR: ' + str(e))
 
