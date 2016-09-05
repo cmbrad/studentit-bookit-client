@@ -4,3 +4,6 @@ target
 *.swp
 .cache
 __pycache__
+build
+dist
+*egg-info

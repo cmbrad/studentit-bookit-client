@@ -59,9 +59,13 @@ def status(client):
 		print('BookIT is down')
 
 
-if __name__ == '__main__':
+def main():
 	try:
 		cli(auto_envvar_prefix='BOOKIT')
 	except Exception as e:
 		print('ERROR: ' + str(e))
+
+
+if __name__ == '__main__':
+	main()
 
