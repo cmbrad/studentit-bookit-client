@@ -15,6 +15,12 @@ def cli(ctx, username, password):
 def server():
 	pass
 
+
+@cli.group()
+def site():
+	pass
+
+
 @cli.group()
 def resource():
 	pass
@@ -50,9 +56,16 @@ def list(client):
 	print(client.list_bookings())
 
 
-@server.command()
+@site.command(name='status')
+@click.option('--site-id')
 @click.pass_obj
-def status(client):
+def site_resource_status(client, site_id):
+	print(client.all_resource_status(site_id=site_id))
+
+
+@server.command(name='status')
+@click.pass_obj
+def server_status(client):
 	if client.server_status():
 		print('BookIT is up and responding to requests')
 	else:

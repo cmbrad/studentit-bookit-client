@@ -1,6 +1,7 @@
 import re
 import logging
 import datetime
+import json
 
 from lxml.html import fromstring
 
@@ -8,9 +9,17 @@ from .api_adapter import ApiAdapter
 
 
 class ApiClient(object):
-	def __init__(self, username, password, logger=None):
+	def __init__(self, username=None, password=None, logger=None):
 		self.adapter = ApiAdapter(username, password)
 		self.logger = logger if logger else logging.getLogger(__name__)
+
+	def all_resource_status(self, site_id=None):
+		endpoint = 'MyPC/Front.aspx?page=getResourceStatesAPI&siteId={site_id}'.format(
+			site_id=site_id if site_id else ''
+		)
+		resp = self.adapter.get(endpoint=endpoint)
+
+		return self._to_json(resp.text)
 
 	def describe_resource_by_id(self, resource_id):
 		resp = self.adapter.get(

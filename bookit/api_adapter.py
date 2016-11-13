@@ -13,7 +13,8 @@ class ApiAdapter(object):
 		self.logger = logging.getLogger(__name__)
 
 		self._session = requests.Session()
-		self._do_login()
+		if self.username and self.password:
+			self._do_login()
 	
 	def _do_login(self):
 		login_string = '<Login><username>{}</username><password>{}</password><rememberMe>false</rememberMe><rememberView>-</rememberView></Login>'.format(self.username, self.password)
