@@ -2,6 +2,7 @@ import re
 import logging
 import datetime
 import json
+import time
 
 from lxml.html import fromstring
 
@@ -20,6 +21,46 @@ class ApiClient(object):
 		resp = self.adapter.get(endpoint=endpoint)
 
 		return self._to_json(resp.text)
+
+	def admin_all_resource_status(self, site_id=None):
+		all_status = self.all_resource_status(site_id)
+
+		for site in all_status:
+			for location in site['locations']:
+				admin_resource_status = self.admin_location_status(location['id'])
+				for resource in location['resources']:
+					resource_id = resource['id']
+					admin_status = admin_resource_status[resource_id]['state']
+					resource['admin_status'] = admin_status
+				# Rate limit or the server hates us
+				time.sleep(0.1)
+
+		return all_status
+
+	def admin_location_status(self, location_id):
+		endpoint = 'MyPC/Front.aspx?page=adminItems&itemType=resource&parentId={location_id}'.format(
+			location_id=location_id
+		)
+		resp = self.adapter.get(endpoint=endpoint)
+
+		matches = fromstring(resp.text).xpath('//*[@class="adminItem"]')
+
+		resources = {}
+		for match in matches:
+			match_id = match.get('id')
+			match_title = match.get('title')
+			title_match = re.search(r'(.*) - (.*)', match_title)
+
+			resource_id = int(re.findall(r'd(\d+)', match_id)[0])
+			resource_name = title_match.group(1)
+			resource_status = title_match.group(2)
+
+			resources[resource_id] = {
+				'name': resource_name,
+				'state': resource_status
+			}
+
+		return resources
 
 	def describe_resource_by_id(self, resource_id):
 		resp = self.adapter.get(

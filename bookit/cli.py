@@ -1,4 +1,5 @@
 import click
+import traceback
 
 from .api_client import ApiClient
 
@@ -13,6 +14,11 @@ def cli(ctx, username, password):
 
 @cli.group()
 def server():
+	pass
+
+
+@cli.group()
+def admin():
 	pass
 
 
@@ -72,11 +78,26 @@ def server_status(client):
 		print('BookIT is down')
 
 
+@admin.command(name='all-resource-status')
+@click.option('--site-id')
+@click.pass_obj
+def admin_all_resource_status(client, site_id):
+	print(client.admin_all_resource_status(site_id))
+
+
+@admin.command(name='location-status')
+@click.option('--location-id', required=True)
+@click.pass_obj
+def admin_location_status(client, location_id):
+	print(client.admin_location_status(location_id))
+
+
 def main():
 	try:
 		cli(auto_envvar_prefix='BOOKIT')
 	except Exception as e:
 		print('ERROR: ' + str(e))
+		traceback.print_exc()
 
 
 if __name__ == '__main__':

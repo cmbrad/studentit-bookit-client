@@ -17,7 +17,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='sit-bookit-client',
-    version='0.0.1',
+    version='0.0.3',
     description='API client and command line application for connecting to BookIT',
     long_description=long_description,
     # The project's main homepage.
