@@ -7,17 +7,19 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
+
 def read(filename):
-	with open(filename, 'r') as f:
-		return f.read()
+    with open(filename, 'r') as f:
+        return f.read()
+
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='sit-bookit-client',
-    version='0.0.4',
+    name='studentit-bookit-client',
+    version='0.0.5',
     description='API client and command line application for connecting to BookIT',
     long_description=long_description,
     # The project's main homepage.
