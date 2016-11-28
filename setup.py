@@ -17,7 +17,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='sit-bookit-client',
-    version='0.0.3',
+    version='0.0.4',
     description='API client and command line application for connecting to BookIT',
     long_description=long_description,
     # The project's main homepage.
@@ -27,7 +27,7 @@ setup(
     author_email='chris.bradley@unimelb.edu.au',
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(include=['bookit*']),
+    packages=find_packages(include=['studentit*']),
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
