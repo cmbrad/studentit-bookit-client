@@ -1,7 +1,8 @@
-import click
 import traceback
 
-from .api_client import ApiClient
+import click
+
+from studentit.bookit.api.api_client import ApiClient
 
 
 @click.group()

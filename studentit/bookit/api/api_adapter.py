@@ -1,9 +1,8 @@
-import re
 import logging
-import requests
+import re
 import time
 
-from .exceptions import LoginFailedException
+import requests
 
 
 class ApiAdapter(object):
