@@ -12,7 +12,10 @@ from .api_adapter import ApiAdapter
 class ApiClient(object):
 	def __init__(self, username=None, password=None, logger=None):
 		self.adapter = ApiAdapter(username, password)
-		self.logger = logger if logger else logging.getLogger(__name__)
+		self.logger = logger or logging.getLogger(__name__)
+
+		if not username or not password:
+			self.logger.warning('Connecting to API with blank username or password')
 
 	def all_resource_status(self, site_id=None):
 		endpoint = 'MyPC/Front.aspx?page=getResourceStatesAPI&siteId={site_id}'.format(
