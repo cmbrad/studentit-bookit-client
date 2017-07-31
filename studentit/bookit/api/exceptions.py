@@ -1,2 +1,2 @@
-class LoginFailedException(Exception): pass
-
+class BookITLoginFailedError(Exception):
+    pass

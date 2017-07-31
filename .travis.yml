@@ -4,12 +4,14 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
 # command to install dependencies
 install: 
-  - pip install pybuilder
-  - pyb install_dependencies
+  - pip install -r build-requirements.txt
+  - pip install -r runtime-requirements.txt
 # command to run tests
 script: 
-  - pyb all_tests
+  - py.test
 env:
-  - BOOKIT_USERNAME=username BOOKIT_PASSWORD=password
+  - BOOKIT_USERNAME=username
+  - BOOKIT_PASSWORD=password
