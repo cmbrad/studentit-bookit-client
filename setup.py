@@ -19,7 +19,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='studentit-bookit-client',
-    version='0.0.5',
+    version='0.1.0',
     description='API client and command line application for connecting to BookIT',
     long_description=long_description,
     # The project's main homepage.
