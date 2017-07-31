@@ -1,27 +1,15 @@
-# Adapted from https://github.com/pypa/sampleproject/blob/master/setup.py
-# Always prefer setuptools over distutils
 from setuptools import setup, find_packages
-# To use a consistent encoding
-from codecs import open
-from os import path
-
-here = path.abspath(path.dirname(__file__))
 
 
 def read(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         return f.read()
-
-
-# Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
 
 setup(
     name='studentit-bookit-client',
-    version='0.1.0',
+    version='0.1.2',
     description='API client and command line application for connecting to BookIT',
-    long_description=long_description,
+    long_description=read('README.rst'),
     # The project's main homepage.
     url='https://github.com/cmbrad/studentit-bookit-client',
     # Author details
