@@ -1,0 +1,112 @@
+﻿<form method="get" name="Form" id="Form" onkeypress="return event.keyCode!=13;">
+  <div class="dialogTitle colorScheme2">
+    <h2>Booking Properties</h2><a class="dialogClose" style="display: inline;" onclick="javascript:HideDialog();"></a></div>
+  <div class="dialogContent colorScheme2">
+    <div class="innerContent">
+      <table cellspacing="0" cellpadding="0" width="360">
+        <tr>
+          <td>
+            <div class="formContent">
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Resource</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span class="emphatic">Booth 7</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Date</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span>01/08/2017</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Start Time</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><select name="startTime" id="startTime" onchange="SubmitDialogForm();" style="width:auto;"><option value="18:00:00" title="">18:00</option>
+                          <option value="20:30:00" title="">20:30</option>
+                          <option value="22:00:00" selected title="">22:00</option></select></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">End Time</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><select name="endTime" id="endTime" onchange="SubmitDialogForm();" style="width:auto;"><option value="22:30:00" selected title="">22:30</option>
+                          <option value="23:00:00" title="">23:00</option>
+                          <option value="23:30:00" title="">23:30</option>
+                          <option value="23:59:00" title="">23:59</option></select></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Email booking receipt</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent">
+                        <div><input type="checkbox" id="emailReceipt" name="emailReceipt" value="True"></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="freeBookingField" id="freeBookingField">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Booking is free</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><input type="checkbox" name="freeBooking" id="freeBooking" value="True" onclick="dependencyCheck('recurringBooking'); retrieveBookingCost();"></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="bookingCost" id="bookingCost">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Current booking cost</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span id="currentBookingCost">-</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="expectedException">Booking overlapped!</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="formButtons"><input type="button" name="submitButton" id="submitButton" class="button colorScheme3" value="Save" onclick="javascript:Form.command.value='create';DisableFormButtons();SubmitDialogForm();"></div>
+          </td>
+        </tr>
+      </table><input type="hidden" name="bookingId" id="bookingId" value=""><input type="hidden" name="date" id="date" value="01-08-2017"><input type="hidden" name="resourceId" id="resourceId" value="900"><input type="hidden" name="editThisOccurrence" id="editThisOccurrence" value="False"><input type="hidden" name="page" id="page" value="booking"><input type="hidden" name="command" id="command" value="add"><input type="hidden" name="caller" id="caller" value=""><input type="hidden" name="submitted" id="submitted" value="1"><input type="hidden" name="dialogId" id="dialogId" value=""></div>
+  </div>
+</form><script type="text/javascript">setFocus('bookedFor');</script><script type="text/javascript">showOnChecked($byId('emailReceipt'),'emailAddress');</script><script type="text/javascript">retrieveBookingCost();</script>

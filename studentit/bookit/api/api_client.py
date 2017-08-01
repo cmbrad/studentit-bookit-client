@@ -4,7 +4,7 @@ import datetime
 import json
 import time
 
-from lxml.html import fromstring
+from bs4 import BeautifulSoup
 
 from .api_adapter import ApiAdapter
 
@@ -46,7 +46,8 @@ class ApiClient(object):
         )
         resp = self.adapter.get(endpoint=endpoint)
 
-        matches = fromstring(resp.text).xpath('//*[@class="adminItem"]')
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        matches = soup.find_all('div', attrs={'class': 'adminItem'})
 
         resources = {}
         for match in matches:
@@ -65,7 +66,7 @@ class ApiClient(object):
 
         return resources
 
-    def describe_resource_by_id(self, resource_id):
+    def available_start_time_by_resource_id(self, resource_id):
         resp = self.adapter.get(
             endpoint='MyPC/Front.aspx',
             params={
@@ -79,13 +80,9 @@ class ApiClient(object):
             }
         )
 
-        matches = fromstring(resp.text).xpath('//*[@id="startTime"]')
-        children = [child.text for child in matches[0].getchildren()]
-
-        return children
-
-    def describe_resource_by_name(self, resource_name):
-        pass
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        start_time_select = soup.find('select', attrs={'id': 'startTime'})
+        return [option.get('value') for option in start_time_select.find_all('option')]
 
     def list_bookings(self):
         resp = self.adapter.get(
@@ -94,14 +91,16 @@ class ApiClient(object):
                 'page': 'search'
             }
         )
-        tree = fromstring(resp.text)
-        matches = tree.xpath('//*[@class="oddRow"]|//*[@class="evenRow"]')
+
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        matches = soup.find_all('tr', attrs={'class': ['oddRow', 'evenRow']})
 
         keys = ['booking_date', 'start_time', 'end_time', 'duration', 'site', 'location', 'resource', 'booking_id']
         bookings = []
         for match in matches:
-            children = [child.text for child in match.getchildren()][:-1]
-            booking_url = match.getchildren()[-1].getchildren()[0].attrib['href']
+            cells = match.find_all('td')
+            children = [cell.renderContents().strip().decode('utf8') for cell in cells][:-1]
+            booking_url = cells[-1].find('a').get('href')
             booking_id = re.search('bookingId=(.*)&', booking_url).group(1)
             children.append(booking_id)
 
@@ -125,12 +124,12 @@ class ApiClient(object):
         )
 
         # Get errors if they exist
-        matches = fromstring(resp.text).xpath('//*[@class="expectedException"]')
-        errors = [match.text for match in matches]
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        matches = soup.find('div', attrs={'class': 'expectedException'}) or []
+        errors = [match.renderContents().strip().decode('utf8') for match in matches]
 
         if errors:
             raise Exception('Delete failed. Error: {}'.format(', '.join(errors)))
-        # Success response javascript:refreshBookingStrip(210, false);HideDialog();
         if 'javascript:refreshBookingStrip' not in resp.text:
             raise Exception('Unexpected error: {}'.format(resp.text))
 
@@ -152,12 +151,12 @@ class ApiClient(object):
         )
 
         # Get errors if they exist
-        matches = fromstring(resp.text).xpath('//*[@class="expectedException"]')
-        errors = [match.text for match in matches]
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        matches = soup.find('div', attrs={'class': 'expectedException'}) or []
+        errors = [match.strip() for match in matches]
 
         if errors:
             raise Exception('Booking failed. Error: {}'.format(', '.join(errors)))
-        # Success response javascript:refreshBookingStrip(210, false);HideDialog();
         if 'javascript:refreshBookingStrip' not in resp.text:
             raise Exception('Unexpected error: {}'.format(resp.text))
 

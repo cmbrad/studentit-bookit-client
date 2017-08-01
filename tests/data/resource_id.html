@@ -1,0 +1,232 @@
+﻿<form method="get" name="dialog0Form" id="dialog0Form" onkeypress="return event.keyCode!=13;">
+  <div class="dialogTitle colorScheme2">
+    <h2>Booking Properties</h2><a class="dialogClose" style="display: inline;" onclick="javascript:HideDialog();"></a></div>
+  <div class="dialogContent colorScheme2">
+    <div class="innerContent">
+      <table cellspacing="0" cellpadding="0" width="360">
+        <tr>
+          <td>
+            <div class="formContent">
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Resource</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span class="emphatic">Booth 7</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Booking for</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent">
+                        <div><input type="radio" name="selfBooking" id="selfBooking" value="True" onclick="javascript:hideFields('userName');$byId('bookedFor').value='';">Self</div>
+                        <div><input type="radio" name="selfBooking" id="selfBooking" value="False" onclick="javascript:showFields('userName');" checked>User</div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div name="userName" id="userName">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">User Name</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent">
+                        <table cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td><input type="text" name="bookedFor" id="bookedFor" value=""></td>
+                            <td><a href="#" class="buttonIconS" onclick="OpenDialog('Front.aspx?page=user&amp;command=showSearch&amp;fieldName=bookedFor'); return false;"><span class="ui-icon ui-icon-search">.</span></a></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="userBalance" id="userBalance">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">User balance</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span id="currentUserBalance">-</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Date</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span>01/08/2017</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Start Time</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><select name="startTime" id="startTime" onchange="SubmitDialogForm();" style="width:auto;"><option value="18:00:00" title="">18:00</option>
+                          <option value="20:30:00" title="">20:30</option></select></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">End Time</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><select name="endTime" id="endTime" onchange="SubmitDialogForm();" style="width:auto;"></select></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Recurring Bookings</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><input type="checkbox" id="recurringBooking" name="recurringBooking" value="True" onclick="javascript: showOnChecked(this,'RecurringTypeField');showOnChecked(this,'RecurringEndDateField');checkRecurring(GetDialogForm()); "></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="RecurringTypeField" id="RecurringTypeField">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Recurring Type</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span><input type="radio" id="recurrenceType" name="recurrenceType" value="DAILY" onclick="javascript:checkRecurring(GetDialogForm());" checked>Daily<br><input type="radio" id="recurrenceType" name="recurrenceType" value="WEEKLY" onclick="javascript:checkRecurring(GetDialogForm());">Weekly
+     - 
+    <span id="weekDayName">Tuesday</span><br><input type="radio" id="recurrenceType" name="recurrenceType" value="MONTHLY" onclick="javascript:checkRecurring(GetDialogForm());">Monthly On
+     
+    <select name="recurrenceMonthDay" id="recurrenceMonthDay" style="width:auto;"><option value="1" selected title="">1</option>
+                            <option value="2" title="">2</option>
+                            <option value="3" title="">3</option>
+                            <option value="4" title="">4</option>
+                            <option value="5" title="">5</option>
+                            <option value="6" title="">6</option>
+                            <option value="7" title="">7</option>
+                            <option value="8" title="">8</option>
+                            <option value="9" title="">9</option>
+                            <option value="10" title="">10</option>
+                            <option value="11" title="">11</option>
+                            <option value="12" title="">12</option>
+                            <option value="13" title="">13</option>
+                            <option value="14" title="">14</option>
+                            <option value="15" title="">15</option>
+                            <option value="16" title="">16</option>
+                            <option value="17" title="">17</option>
+                            <option value="18" title="">18</option>
+                            <option value="19" title="">19</option>
+                            <option value="20" title="">20</option>
+                            <option value="21" title="">21</option>
+                            <option value="22" title="">22</option>
+                            <option value="23" title="">23</option>
+                            <option value="24" title="">24</option>
+                            <option value="25" title="">25</option>
+                            <option value="26" title="">26</option>
+                            <option value="27" title="">27</option>
+                            <option value="28" title="">28</option>
+                            <option value="29" title="">29</option>
+                            <option value="30" title="">30</option>
+                            <option value="31" title="">31</option></select></span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="RecurringEndDateField" id="RecurringEndDateField">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Recurring End Date</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><input type="text" id="recurrenceEndDate" name="recurrenceEndDate" value="2017-08-01" maxlength="10" class="dateInput"><script>
+          $(document).ready(function() {
+            $('#recurrenceEndDate').datepicker();
+            $.datepicker.setDefaults($.datepicker.regional['en-GB']);
+            
+            
+            $('#recurrenceEndDate').datepicker({ currentText: "{$value}" });
+            $('#recurrenceEndDate').datepicker( "option", "minDate", "01/08/2017" );      
+          });
+        </script></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Email booking receipt</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent">
+                        <div><input type="checkbox" id="emailReceipt" name="emailReceipt" value="True" onclick="javascript:showOnChecked(this,'emailAddress');" checked><input type="text" name="emailAddress" id="emailAddress" value=""></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="freeBookingField" id="freeBookingField">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Booking is free</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><input type="checkbox" name="freeBooking" id="freeBooking" value="True" onclick="dependencyCheck('recurringBooking'); retrieveBookingCost();"></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="blockInvisible" name="bookingCost" id="bookingCost">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top">
+                      <div class="formFieldLabel">Current booking cost</div>
+                    </td>
+                    <td valign="top">
+                      <div class="formFieldContent"><span id="currentBookingCost">-</span></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="formButtons"><input type="button" name="submitButton" id="submitButton" class="button colorScheme3" value="Save" onclick="javascript:dialog0Form.command.value='create';DisableFormButtons();SubmitDialogForm();"></div>
+          </td>
+        </tr>
+      </table><input type="hidden" name="bookingId" id="bookingId" value=""><input type="hidden" name="date" id="date" value="2017-08-01"><input type="hidden" name="resourceId" id="resourceId" value="900"><input type="hidden" name="editThisOccurrence" id="editThisOccurrence" value="False"><input type="hidden" name="page" id="page" value="booking"><input type="hidden" name="command" id="command" value="add"><input type="hidden" name="caller" id="caller" value=""><input type="hidden" name="submitted" id="submitted" value="1"><input type="hidden" name="dialogId" id="dialogId" value="dialog0"></div>
+  </div>
+</form><script type="text/javascript">setFocus('bookedFor');</script><script type="text/javascript">showOnChecked($byId('emailReceipt'),'emailAddress');</script><script type="text/javascript">retrieveBookingCost();</script>
