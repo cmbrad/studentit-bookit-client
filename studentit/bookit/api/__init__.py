@@ -1,2 +1,2 @@
 from .api_client import ApiClient  # noqa
-from .exceptions import BookITLoginFailedError  # noqa
+from .exceptions import BookItLoginFailedError  # noqa

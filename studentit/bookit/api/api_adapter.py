@@ -4,6 +4,8 @@ import time
 
 import requests
 
+from studentit.bookit.api.exceptions import BookItLoginFailedError
+
 
 class ApiAdapter(object):
     def __init__(self, username, password):
@@ -26,7 +28,7 @@ class ApiAdapter(object):
 
         match = re.search("\'http://bookit.unimelb.edu.au/(.*)\'", login_res.text)
         if not match:
-            raise Exception('Login failed. Check your username and password')
+            raise BookItLoginFailedError(username=self.username)
         verify_url = match.group(1)
         verify_res = self.get(endpoint=verify_url)
         assert verify_res.status_code == 200
