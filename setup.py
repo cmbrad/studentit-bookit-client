@@ -7,7 +7,7 @@ def read(filename):
 
 setup(
     name='studentit-bookit-client',
-    version='0.1.3',
+    version='0.1.4',
     description='API client and command line application for connecting to BookIT',
     long_description=read('README.rst'),
     # The project's main homepage.
