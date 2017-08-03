@@ -111,6 +111,40 @@ class ApiClient(object):
 
         return bookings
 
+    def list_bookings_for(self, username, from_date=datetime.date.today().strftime('%d/%m/%Y'),
+                          to_date=(datetime.date.today() + datetime.timedelta(days=365)).strftime('%d/%m/%Y')):
+        resp = self.adapter.get(
+            endpoint='MyPC/Front.aspx',
+            params={
+                'page': 'search',
+                'submitted': 1,
+                'bookedForUser': username,
+                'bookingType': -1,
+                'fromDate': from_date,
+                'toDate': to_date
+            }
+        )
+
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        matches = soup.find_all('tr', attrs={'class': ['oddRow', 'evenRow']})
+
+        keys = ['booked_for', 'booking_date', 'start_time', 'end_time', 'duration', 'site', 'location', 'resource',
+                'booking_type', 'booking_method', 'booked_by', 'booking_id']
+        bookings = []
+        for match in matches:
+            cells = match.find_all('td')
+            children = [cell.renderContents().strip().decode('utf8') for cell in cells][:-1]
+            booking_url = cells[-1].find('a').get('href')
+            booking_id = re.search('bookingId=(.*)&', booking_url).group(1)
+            children.append(booking_id)
+
+            booking = {}
+            for i in range(len(children)):
+                booking[keys[i]] = children[i]
+            bookings.append(booking)
+
+        return bookings
+
     def delete_booking(self, booking_id, email_receipt):
         resp = self.adapter.post(
             endpoint='MyPC/Front.aspx',
