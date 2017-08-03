@@ -14,9 +14,8 @@ class ApiAdapter(object):
 
         self.logger = logging.getLogger(__name__)
 
-        self._logged_in = False
-
         self._session = requests.Session()
+
         if self.username and self.password:
             self._do_login()
 
@@ -24,16 +23,10 @@ class ApiAdapter(object):
         login_string = f'<Login><username>{self.username}</username><password>{self.password}</password>' \
                        f'<rememberMe>false</rememberMe><rememberView>-</rememberView></Login>'
         login_res = self.post(endpoint='cire/login.aspx', data=login_string)
-        assert login_res.status_code == 200
-
         match = re.search("\'http://bookit.unimelb.edu.au/(.*)\'", login_res.text)
-        if not match:
-            raise BookItLoginFailedError(username=self.username)
-        verify_url = match.group(1)
-        verify_res = self.get(endpoint=verify_url)
-        assert verify_res.status_code == 200
 
-        self._logged_in = True
+        if not match or not self.get(endpoint=match.group(1)).status_code == 200:
+            raise BookItLoginFailedError(username=self.username)
 
     def post(self, endpoint, *args, **kwargs):
         return self._request(method=self._session.post, endpoint=endpoint, *args, **kwargs)
@@ -56,8 +49,7 @@ class ApiAdapter(object):
     def _request(self, endpoint, method, *args, **kwargs):
         res = method(self._get_url(endpoint), *args, **kwargs)
 
-        if self._logged_in and "location.href = 'http://834S-MYPC/cire/login.aspx'" in res.text:
-            self._logged_in = False
+        if "location.href = 'http://834S-MYPC/cire/login.aspx'" in res.text:
             self.logger.error('Session expired. Reauthenticating...')
             self._do_login()
             res = method(self._get_url(endpoint), *args, **kwargs)

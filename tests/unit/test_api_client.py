@@ -16,10 +16,6 @@ def client(monkeypatch):
     )
 
 
-def test_api_client_should_have_api_adapter(client):
-    assert not client.adapter._logged_in
-
-
 def test_admin_location_status_should_return_status_of_all_resources(client):
     get_mock = MagicMock()
     get_mock.return_value.text = read_data('admin_location.html')

@@ -10,12 +10,20 @@ from .api_adapter import ApiAdapter
 
 
 class ApiClient(object):
-    def __init__(self, username=None, password=None, logger=None):
+    def __init__(self, username=None, password=None):
         self.adapter = ApiAdapter(username, password)
-        self.logger = logger or logging.getLogger(__name__)
+        self.logger = logging.getLogger(__name__)
 
-        if not username or not password:
-            self.logger.warning('Connecting to API with blank username or password')
+    def is_admin(self):
+        resp = self.adapter.get(
+            endpoint='MyPC/Front.aspx',
+            params={
+                'page': 'header'
+            }
+        )
+
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        return 'menuItemAdmin' in [match.get('id') for match in soup.find_all('a', attrs={'class': 'menu'})]
 
     def all_resource_status(self, site_id=None):
         endpoint = 'MyPC/Front.aspx?page=getResourceStatesAPI&siteId={site_id}'.format(
