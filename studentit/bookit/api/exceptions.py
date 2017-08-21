@@ -1,6 +1,6 @@
 class BookItError(Exception):
     def __repr__(self):
-        return f'{self.__class__.__name__} ({self.__dict__})'
+        return '{} ({})'.format(self.__class__.__name__, self.__dict__)
 
 
 class BookItLoginFailedError(BookItError):

@@ -113,6 +113,6 @@ def test_create_booking_should_raise_exception_on_error(client):
 
 def read_data(data_name):
     data_dir = Path(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')).resolve()
-    file_path = os.path.join(data_dir, data_name)
+    file_path = os.path.join(str(data_dir), data_name)
     with open(file_path, 'r') as f:
         return f.read()

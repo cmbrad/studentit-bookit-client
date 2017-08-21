@@ -20,8 +20,8 @@ class ApiAdapter(object):
             self._do_login()
 
     def _do_login(self):
-        login_string = f'<Login><username>{self.username}</username><password>{self.password}</password>' \
-                       f'<rememberMe>false</rememberMe><rememberView>-</rememberView></Login>'
+        login_string = '<Login><username>{}</username><password>{}</password><rememberMe>false</rememberMe>' \
+                       '<rememberView>-</rememberView></Login>'.format(self.username, self.password)
         login_res = self.post(endpoint='cire/login.aspx', data=login_string)
         match = re.search("\'http://bookit.unimelb.edu.au/(.*)\'", login_res.text)
 

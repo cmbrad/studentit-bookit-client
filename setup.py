@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from io import open
 
 
 def read(filename):
@@ -7,7 +8,7 @@ def read(filename):
 
 setup(
     name='studentit-bookit-client',
-    version='0.2.0',
+    version='0.2.1',
     description='API client and command line application for connecting to BookIT',
     long_description=read('README.rst'),
     # The project's main homepage.
